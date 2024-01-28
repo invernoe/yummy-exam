@@ -1,9 +1,9 @@
 export class ApiCalls {
 
   static async searchByFirstLetter(letter) {
-    //if search by first letter empty return
+    //if search by first letter empty return empty meals object
     if(!letter) {
-      return;
+      return {meals: undefined};
     }
     
     let response = await fetch(
