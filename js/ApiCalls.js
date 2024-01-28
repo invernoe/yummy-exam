@@ -1,6 +1,11 @@
 export class ApiCalls {
 
   static async searchByFirstLetter(letter) {
+    //if search by first letter empty return
+    if(!letter) {
+      return;
+    }
+    
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`
     );
