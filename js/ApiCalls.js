@@ -1,17 +1,18 @@
 export class ApiCalls {
-
+  //fetches data by first letter
   static async searchByFirstLetter(letter) {
     //if search by first letter empty return empty meals object
     if(!letter) {
       return {meals: undefined};
     }
-    
+
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`
     );
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches details 
   static async getMealDetailsByID(id) {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -19,6 +20,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches all available categories
   static async getAllCategories() {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/categories.php`
@@ -26,6 +28,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches all Areas
   static async getAllArea() {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
@@ -33,6 +36,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches all ingredients
   static async getAllIngredients() {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/list.php?i=list`
@@ -40,6 +44,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches by ingredient 
   static async searchByIngredient(ing) {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ing}`
@@ -47,6 +52,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches by category
   static async searchByCategory(cat) {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?c=${cat}`
@@ -54,6 +60,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches by area 
   static async searchByArea(area) {
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`
@@ -61,6 +68,7 @@ export class ApiCalls {
     let finalResponse = await response.json();
     return finalResponse;
   }
+  //fetches by name
   static async searchByName(name){
     let response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`

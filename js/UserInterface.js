@@ -14,6 +14,7 @@ export class UserInterface {
     });
   }
 
+  //closing navbar function that calculates outerwidth and adds the X button
   closeNavbar() {
     let navBodyWidth = $(".nav-tab").outerWidth(true);
     $(".side-nav-menu").animate({ marginLeft: -navBodyWidth }, 500);
@@ -24,6 +25,7 @@ export class UserInterface {
     $(".links li").animate({ top: 300 }, 500);
   }
 
+  //open navbar function by animating the left margin and readding the burger icon
   openNavbar() {
     $(".side-nav-menu").animate({ marginLeft: 0 }, 500);
     $(".open-close-icon").removeClass("fa-align-justify");
@@ -36,6 +38,7 @@ export class UserInterface {
     }
   }
 
+  //shows overlay when given the state of wether it is under the navbar or on top of it. default value is under
   showOverlay(isShowOverNav = false) {
     if (isShowOverNav) {
       $(".loadingOverlay").css("z-index", "1991");
@@ -44,7 +47,7 @@ export class UserInterface {
     }
     $(".loadingOverlay").fadeIn(300);
   }
-
+  //hides overlay by fading it out for half a second
   hideOverlay() {
     $(".loadingOverlay").fadeOut(500);
   }
@@ -62,6 +65,7 @@ export class UserInterface {
     //display main section and hide other sections
     this.displayMainView();
     let mealsarr = "";
+    //check if meals have actual data inside it to start the fore loop. if not then meal.length will be set to 0 and the for loop will not start
     let mealLength = meals ? meals.length : 0;
     for (let i = 0; i < mealLength; i++) {
       mealsarr += `
@@ -82,13 +86,16 @@ export class UserInterface {
             `;
     }
 
+    //sending the ready html to the #mealListContainer using Jquery
     $("#mealListContainer").html(mealsarr);
   }
 
+  //displaying categories
   displayCategories(categories) {
     this.displayMainView();
 
     let categoriesArr = "";
+    //refer to displayMeals()
     for (let i = 0; i < categories.length; i++) {
       const element = categories[i];
       categoriesArr += `<div class="col-md-3 categoryItem">
@@ -110,7 +117,7 @@ export class UserInterface {
 
     $("#mealListContainer").html(categoriesArr);
   }
-
+  //displaying search bar 
   displaySearch() {
     this.displayMainView();
     $("#searchbar").css("display", "block");
@@ -120,14 +127,14 @@ export class UserInterface {
       $("#searchbar").offset().top + $("#searchbar").outerHeight();
     $(".loadingOverlay").css("top", searchOffsetBottom + "px");
   }
-
+  //hiding the search bar so it looks more aesthetically pleasing
   hideSeach() {
     //empty search div contents
     $("#searchbar").css("display", "none");
     //revert overlay back to normal
     $(".loadingOverlay").css("top", 0);
   }
-
+  //called when items are clicked to display details
   displayDetails(meal) {
     //hide main and contact us section
     $("main, .contact-us").css("display", "none");
@@ -135,6 +142,7 @@ export class UserInterface {
     $(".details").css("display", "block");
 
     let ingredients = ``;
+    //for loop to get only 20 ingredients out of the hundreds
     for (let i = 1; i <= 20; i++) {
       if (meal[`strIngredient${i}`]) {
         ingredients += `<li class="alert alert-info d-block m-2 p-1">${
@@ -142,7 +150,7 @@ export class UserInterface {
         } ${meal[`strIngredient${i}`]}</li> `;
       }
     }
-
+    //splitting tags as they come with "," between them
     let tags = meal.strTags?.split(",");
     let tagsLength = tags ? tags.length : 0;
     let tagsStr = ``;
@@ -172,14 +180,14 @@ export class UserInterface {
         <a href="${meal.strYoutube}" target="_blank" class="btn btn-danger">Youtube</a>`;
     $("#detailsContainer").html(details);
   }
-
+  //displays contact us 
   displayContactUs() {
     //hide main and details sections
     $("main, .details").css("display", "none");
     //show contact us view
     $(".contact-us").css("display", "flex");
   }
-
+  //displays area while taking the array of areas fetched from API
   displayArea(arrArea) {
     this.displayMainView();
     let area = ``;
@@ -197,9 +205,11 @@ export class UserInterface {
     $("#mealListContainer").html(area);
   }
 
+  //displays ingredients fetched from API
   displayIngredients(ing) {
     this.displayMainView();
     let ingredients = ``;
+    //strDescription split to get the words then sliced so that only 20 words are there then joined back again
     for (let i = 0; i < ing.length; i++) {
       ingredients += `
       <div class="col-md-3">

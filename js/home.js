@@ -4,12 +4,17 @@ import { ContactRegex } from "./contactRegex.js";
 
 export class Home {
   constructor() {
+    //creating new ui instance
     this.ui = new UserInterface();
+    //displaying the meals when page first loads
     this.displayMealsOnStartup(true);
+    //setting all the navbar onclick events
     this.setupNavbarClickFunctions();
+    //calling regex setup
     ContactRegex.setupRegex();
   }
 
+  //sets up all navbar on click events and the navbar closing functionality
   setupNavbarClickFunctions() {
     $("#categoriesTab").on("click", () => {
       this.fetchCategories();
@@ -39,7 +44,7 @@ export class Home {
       this.ui.hideSeach();
     });
   }
-
+  //function that is called when ingredients tab is clicked on to fetch from api data then display it and sets up the details on click
   fetchIngredients() {
     this.ui.showOverlay();
     ApiCalls.getAllIngredients().then((res) => {
@@ -48,14 +53,14 @@ export class Home {
       this.setupIngredientsOnClick();
     });
   }
-
+  //adds on click event listener to add the details page
   setupIngredientsOnClick() {
     $(".ingredient-item").click((e) => {
       let ingredient = $(e.currentTarget).children("h3").text();
       this.searchByIngredientUsingId(ingredient);
     });
   }
-
+  //for searching the ingredients by using the id retrieved from api
   searchByIngredientUsingId(id) {
     ApiCalls.searchByIngredient(id).then((res) => {
       this.ui.showOverlay();
@@ -64,7 +69,7 @@ export class Home {
       this.ui.hideOverlay();
     });
   }
-
+  //function that is called when area tab is clicked on to fetch from api data then display it and sets up the details on click
   fetchArea() {
     this.ui.showOverlay();
     ApiCalls.getAllArea().then((res) => {
@@ -73,14 +78,14 @@ export class Home {
       this.setupAreaOnClick();
     });
   }
-
+  //sets up the on click function to retrieve data from html then search
   setupAreaOnClick() {
     $(".area-item").click((e) => {
       let area = $(e.currentTarget).children().children().text();
       this.searchByAreaUsingId(area);
     });
   }
-
+  //searches the area using id obtained from html
   searchByAreaUsingId(id) {
     ApiCalls.searchByArea(id).then((res) => {
       this.ui.showOverlay();
@@ -89,7 +94,7 @@ export class Home {
       this.ui.hideOverlay();
     });
   }
-
+  //displays the meals when the body loads
   displayMealsOnStartup(state) {
     this.ui.showOverlay(state);
     ApiCalls.searchByName("").then((res) => {
@@ -98,7 +103,7 @@ export class Home {
       this.ui.hideOverlay();
     });
   }
-
+  //function that is called when categories tab is clicked on to fetch from api data then display it and sets up the on click
   fetchCategories() {
     this.ui.showOverlay();
     ApiCalls.getAllCategories().then((res) => {
@@ -107,13 +112,13 @@ export class Home {
       this.setupCategoryOnClicks();
     });
   }
-
+  //function that is called when search tab is clicked on to fetch from api data then display it and sets up the details on click
   fetchSearch() {
     this.ui.displaySearch();
     this.setupSearch();
     this.setupFirstLetterSearch();
   }
-
+  //sets up even listeners on the search input fields
   setupSearch() {
     $("#nSearch").on("keyup", () => {
       //show loading overlay before making api call
@@ -126,7 +131,7 @@ export class Home {
       });
     });
   }
-
+  //sets up even listeners on the search by first letter input fields
   setupFirstLetterSearch() {
     $("#flSearch").keyup(() => {
       //show loading overlay before making api call
@@ -139,7 +144,7 @@ export class Home {
       });
     });
   }
-
+  //sets up categories on click event
   setupCategoryOnClicks() {
     //setup on click for each categorry
     $(".categoryItem").on("click", (e) => {
@@ -159,10 +164,10 @@ export class Home {
       });
     });
   }
-
+  //function only fired when page is reloaded
   setupMealOnclick() {
     $(".meal").click((e) => {
-      let id = $(e.target).parent().data("mealId");
+      let id = $(e.currentTarget).data("mealId");
       this.ui.showOverlay();
       ApiCalls.getMealDetailsByID(id).then((result) => {
         this.ui.displayDetails(result.meals[0]);
